@@ -95,9 +95,8 @@ function bindEvents() {
     persist();
   });
 
-  elements.taskProject.addEventListener("change", () => {
-    const project = getProject(elements.taskProject.value);
-    if (project) elements.taskType.value = project.type;
+  elements.taskType.addEventListener("change", () => {
+    renderProjectOptions();
   });
 
   elements.taskForm.addEventListener("submit", (event) => {
@@ -125,20 +124,22 @@ function bindEvents() {
 }
 
 function addTask() {
-  const project = getProject(elements.taskProject.value) || state.projects[0];
+  const selectedType = elements.taskType.value;
+  const project = getProject(elements.taskProject.value) || getProjectsForType(selectedType)[0] || state.projects[0];
   state.tasks.push({
     id: uid(),
     title: elements.taskTitle.value.trim(),
     date: state.activeDate,
     projectId: project.id,
-    type: elements.taskType.value,
+    type: selectedType,
     time: elements.taskTime.value,
     done: false,
     createdAt: new Date().toISOString(),
   });
   elements.taskForm.reset();
+  elements.taskType.value = selectedType;
+  renderProjectOptions();
   elements.taskProject.value = project.id;
-  elements.taskType.value = project.type;
   persist("Задача добавлена");
 }
 
@@ -196,12 +197,18 @@ function render() {
 }
 
 function renderProjectOptions() {
-  elements.taskProject.innerHTML = state.projects
+  const selectedType = elements.taskType.value || "smm";
+  const previousProject = elements.taskProject.value;
+  const projects = getProjectsForType(selectedType);
+
+  elements.taskProject.innerHTML = projects
     .map((project) => `<option value="${project.id}">${escapeHtml(project.name)}</option>`)
     .join("");
-  if (!elements.taskProject.value && state.projects[0]) {
-    elements.taskProject.value = state.projects[0].id;
-    elements.taskType.value = state.projects[0].type;
+
+  if (projects.some((project) => project.id === previousProject)) {
+    elements.taskProject.value = previousProject;
+  } else if (projects[0]) {
+    elements.taskProject.value = projects[0].id;
   }
 }
 
@@ -257,8 +264,20 @@ function renderTask(task) {
         <strong>${escapeHtml(task.title)}</strong>
         <span>${task.time ? `${task.time} · ` : ""}${typeLabel(task.type)}</span>
       </div>
-      <button class="tiny-button" data-move-task="${task.id}" type="button">завтра</button>
-      <button class="icon-button" data-delete-task="${task.id}" type="button" aria-label="Удалить">×</button>
+      <div class="task-actions">
+        <button class="icon-button" data-move-task="${task.id}" type="button" aria-label="Перенести на завтра">
+          <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 12h13" />
+            <path d="m13 7 5 5-5 5" />
+          </svg>
+        </button>
+        <button class="icon-button" data-delete-task="${task.id}" type="button" aria-label="Удалить">
+          <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12" />
+            <path d="M18 6 6 18" />
+          </svg>
+        </button>
+      </div>
     </div>
   `;
 }
@@ -549,6 +568,15 @@ function getTask(id) {
 
 function getProject(id) {
   return state.projects.find((project) => project.id === id);
+}
+
+function getProjectsForType(type) {
+  const mainTypes = ["smm", "design"];
+  const projects = state.projects.filter((project) => {
+    if (type === "other") return !mainTypes.includes(project.type);
+    return project.type === type;
+  });
+  return projects.length ? projects : state.projects;
 }
 
 function sumMoney(entries, kind) {

@@ -5,15 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#f7fbff" />
     <title>Мой трекер</title>
-    <link rel="stylesheet" href="./styles.css?v=planner-3" />
+    <link rel="stylesheet" href="./styles.css?v=planner-5" />
   </head>
   <body>
     <div class="app-shell">
       <header class="app-header">
         <div>
           <p class="eyebrow" id="currentMonthLabel">Месяц</p>
-          <h1>Мой трекер</h1>
-          <p class="page-note">План на день, деньги, проекты и итоги без лишней сложности.</p>
+          <h1>ТРЕКЕР</h1>
         </div>
       </header>
 
@@ -46,15 +45,13 @@
           </section>
 
           <form class="task-form" id="taskForm">
-            <input id="taskTitle" type="text" placeholder="Новая задача" required />
-            <select id="taskProject"></select>
             <select id="taskType">
               <option value="smm">SMM</option>
               <option value="design">Дизайн</option>
-              <option value="money">Деньги</option>
-              <option value="personal">Личное</option>
               <option value="other">Другое</option>
             </select>
+            <select id="taskProject"></select>
+            <input id="taskTitle" type="text" placeholder="Новая задача" required />
             <input id="taskTime" type="time" />
             <button class="primary-button" type="submit">Добавить</button>
           </form>
@@ -240,6 +237,6 @@
     </div>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="./app.js?v=planner-3"></script>
+    <script src="./app.js?v=planner-5"></script>
   </body>
 </html>

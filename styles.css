@@ -1,22 +1,22 @@
 :root {
-  --bg: #f7fbff;
+  --bg: #fbfdff;
   --panel: rgba(255, 255, 255, 0.9);
   --panel-strong: #ffffff;
   --ink: #121725;
   --muted: #818b9d;
   --line: rgba(152, 174, 204, 0.24);
   --blue: #4388f7;
-  --blue-soft: #edf6ff;
-  --blue-wash: #d9edff;
+  --blue-soft: #eef7ff;
+  --blue-wash: #e3f2ff;
   --green: #57c9ad;
   --green-soft: #edf9f5;
   --coral: #ff988b;
-  --coral-soft: #fff0ee;
+  --coral-soft: #fff1f4;
   --gold: #f4bd68;
   --gold-soft: #fff7e8;
   --plum: #8b82ee;
-  --plum-soft: #f0efff;
-  --red-soft: #fff0f0;
+  --plum-soft: #f2f1ff;
+  --red-soft: #fff2f5;
   --shadow: 0 24px 58px rgba(67, 136, 247, 0.11);
   --soft-shadow: 0 12px 28px rgba(67, 136, 247, 0.08);
 }
@@ -34,10 +34,7 @@ body {
 body {
   margin: 0;
   color: var(--ink);
-  background:
-    radial-gradient(circle at 16% 0%, rgba(163, 213, 255, 0.64), transparent 35%),
-    radial-gradient(circle at 92% 8%, rgba(206, 235, 255, 0.78), transparent 32%),
-    linear-gradient(180deg, #f5fbff 0%, #fbfdff 48%, #f2f8ff 100%);
+  background: var(--bg);
   font-family:
     Gilroy, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
@@ -141,7 +138,7 @@ h3 {
 
 .primary-button {
   border-color: rgba(67, 136, 247, 0.34);
-  background: linear-gradient(180deg, #63a5ff, var(--blue));
+  background: var(--blue);
   color: #fff;
   box-shadow: 0 14px 26px rgba(67, 136, 247, 0.24);
 }
@@ -241,6 +238,21 @@ input[type="date"] {
   padding: 16px;
 }
 
+.today-hero article:nth-child(1),
+.review-stats article:nth-child(1) {
+  background: var(--blue-soft);
+}
+
+.today-hero article:nth-child(2),
+.review-stats article:nth-child(2) {
+  background: var(--coral-soft);
+}
+
+.today-hero article:nth-child(3),
+.review-stats article:nth-child(3) {
+  background: #f8fbff;
+}
+
 .money-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
@@ -271,27 +283,27 @@ input[type="date"] {
 }
 
 .accent-green {
-  background: linear-gradient(180deg, #fff 0%, var(--green-soft) 100%);
+  background: var(--green-soft);
 }
 
 .accent-blue {
-  background: linear-gradient(180deg, #fff 0%, var(--blue-soft) 100%);
+  background: var(--blue-soft);
 }
 
 .accent-coral {
-  background: linear-gradient(180deg, #fff 0%, var(--coral-soft) 100%);
+  background: var(--coral-soft);
 }
 
 .accent-red {
-  background: linear-gradient(180deg, #fff 0%, var(--red-soft) 100%);
+  background: var(--red-soft);
 }
 
 .accent-gold {
-  background: linear-gradient(180deg, #fff 0%, var(--gold-soft) 100%);
+  background: var(--gold-soft);
 }
 
 .accent-plum {
-  background: linear-gradient(180deg, #fff 0%, var(--plum-soft) 100%);
+  background: var(--plum-soft);
 }
 
 .task-form,
@@ -299,7 +311,7 @@ input[type="date"] {
 .project-form,
 .review-form {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 0.8fr auto;
+  grid-template-columns: 1fr 1.2fr 2fr 0.8fr auto;
   gap: 10px;
   margin-bottom: 16px;
   padding: 12px;
@@ -339,7 +351,7 @@ input[type="date"] {
   min-width: 0;
   border: 1px solid var(--line);
   border-radius: 26px;
-  background: var(--panel);
+  background: #f8fbff;
   box-shadow: var(--soft-shadow);
   padding: 16px;
 }
@@ -375,7 +387,7 @@ input[type="date"] {
 
 .task-item {
   display: grid;
-  grid-template-columns: 34px minmax(0, 1fr) auto 34px;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
   align-items: center;
   gap: 10px;
   min-width: 0;
@@ -402,6 +414,22 @@ input[type="date"] {
   color: var(--blue);
   font-weight: 900;
   box-shadow: 0 8px 18px rgba(67, 136, 247, 0.08);
+}
+
+.task-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.action-icon {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.4;
 }
 
 .task-copy {
@@ -520,7 +548,7 @@ input[type="date"] {
 }
 
 .nav-tab.active {
-  background: linear-gradient(180deg, #f7fbff 0%, var(--blue-soft) 100%);
+  background: var(--blue-soft);
   color: var(--blue);
   box-shadow: inset 0 0 0 1px rgba(67, 136, 247, 0.14);
   transform: translateY(-1px);
@@ -619,12 +647,12 @@ input[type="date"] {
   }
 
   .task-item {
-    grid-template-columns: 34px minmax(0, 1fr) 34px;
+    grid-template-columns: 34px minmax(0, 1fr);
   }
 
-  .task-item .tiny-button {
+  .task-actions {
     grid-column: 2 / 3;
-    width: fit-content;
+    justify-self: end;
   }
 
   input,
