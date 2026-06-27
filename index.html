@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7fbff" />
+    <title>Мой трекер</title>
+    <link rel="stylesheet" href="./styles.css?v=planner-3" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="app-header">
+        <div>
+          <p class="eyebrow" id="currentMonthLabel">Месяц</p>
+          <h1>Мой трекер</h1>
+          <p class="page-note">План на день, деньги, проекты и итоги без лишней сложности.</p>
+        </div>
+      </header>
+
+      <main class="main-area">
+        <section class="tab-panel active" data-panel="day">
+          <div class="screen-heading">
+            <div>
+              <p class="eyebrow">Сегодня</p>
+              <h2 id="dayTitle">План дня</h2>
+            </div>
+            <input class="date-input" id="activeDate" type="date" />
+          </div>
+
+          <section class="today-hero">
+            <article>
+              <span>Закрыто</span>
+              <strong id="doneCount">0/0</strong>
+              <small id="donePercent">0% задач</small>
+            </article>
+            <article>
+              <span>SMM</span>
+              <strong id="todaySmmCount">0</strong>
+              <small>задач сегодня</small>
+            </article>
+            <article>
+              <span>Дизайн</span>
+              <strong id="todayDesignCount">0</strong>
+              <small>задач сегодня</small>
+            </article>
+          </section>
+
+          <form class="task-form" id="taskForm">
+            <input id="taskTitle" type="text" placeholder="Новая задача" required />
+            <select id="taskProject"></select>
+            <select id="taskType">
+              <option value="smm">SMM</option>
+              <option value="design">Дизайн</option>
+              <option value="money">Деньги</option>
+              <option value="personal">Личное</option>
+              <option value="other">Другое</option>
+            </select>
+            <input id="taskTime" type="time" />
+            <button class="primary-button" type="submit">Добавить</button>
+          </form>
+
+          <section class="task-groups" id="taskGroups"></section>
+        </section>
+
+        <section class="tab-panel" data-panel="plan">
+          <div class="screen-heading">
+            <div>
+              <p class="eyebrow">План</p>
+              <h2>Ближайшие дни</h2>
+            </div>
+          </div>
+          <section class="plan-list" id="planList"></section>
+        </section>
+
+        <section class="tab-panel" data-panel="money">
+          <div class="screen-heading">
+            <div>
+              <p class="eyebrow">Деньги</p>
+              <h2>Доходы, расходы, накопления</h2>
+            </div>
+          </div>
+
+          <section class="money-grid">
+            <article class="metric-card accent-green wide-metric">
+              <span>Доход месяца</span>
+              <strong id="monthIncome">0 ₽</strong>
+              <small id="incomeProgress">0% от цели</small>
+            </article>
+            <article class="metric-card accent-blue">
+              <span>SMM</span>
+              <strong id="smmIncome">0 ₽</strong>
+              <small id="smmShare">0% дохода</small>
+            </article>
+            <article class="metric-card accent-coral">
+              <span>Дизайн</span>
+              <strong id="designIncome">0 ₽</strong>
+              <small id="designShare">0% дохода</small>
+            </article>
+            <article class="metric-card accent-red">
+              <span>Расходы</span>
+              <strong id="monthExpenses">0 ₽</strong>
+              <small id="expenseShare">0% от дохода</small>
+            </article>
+            <article class="metric-card accent-gold">
+              <span>Накопления</span>
+              <strong id="monthSaved">0 ₽</strong>
+              <small id="savingsProgress">0% от цели</small>
+            </article>
+            <article class="metric-card accent-plum wide-metric">
+              <span>Остаток</span>
+              <strong id="netBalance">0 ₽</strong>
+              <small id="netBalanceNote">после расходов</small>
+            </article>
+          </section>
+
+          <form class="money-form" id="moneyForm">
+            <select id="moneyKind">
+              <option value="income">Доход</option>
+              <option value="expense">Расход</option>
+              <option value="saving">Накопление</option>
+            </select>
+            <input id="moneyDate" type="date" required />
+            <input id="moneySource" type="text" placeholder="Источник или категория" required />
+            <input id="moneyAmount" type="number" min="0" step="100" placeholder="Сумма" required />
+            <button class="primary-button" type="submit">Добавить</button>
+          </form>
+
+          <section class="compact-list" id="moneyList"></section>
+        </section>
+
+        <section class="tab-panel" data-panel="projects">
+          <div class="screen-heading">
+            <div>
+              <p class="eyebrow">Проекты</p>
+              <h2>Где сейчас работа</h2>
+            </div>
+          </div>
+
+          <form class="project-form" id="projectForm">
+            <input id="projectName" type="text" placeholder="Название проекта" required />
+            <select id="projectType">
+              <option value="smm">SMM</option>
+              <option value="design">Дизайн</option>
+              <option value="personal">Личное</option>
+              <option value="other">Другое</option>
+            </select>
+            <input id="projectColor" type="color" value="#2f7cf6" />
+            <button class="primary-button" type="submit">Добавить</button>
+          </form>
+
+          <section class="project-list" id="projectList"></section>
+        </section>
+
+        <section class="tab-panel" data-panel="reviews">
+          <div class="screen-heading">
+            <div>
+              <p class="eyebrow">Итоги</p>
+              <h2>Неделя и месяц</h2>
+            </div>
+          </div>
+
+          <section class="review-stats">
+            <article>
+              <span>SMM за неделю</span>
+              <strong id="weekSmmShare">0%</strong>
+            </article>
+            <article>
+              <span>Дизайн за неделю</span>
+              <strong id="weekDesignShare">0%</strong>
+            </article>
+            <article>
+              <span>Закрыто за неделю</span>
+              <strong id="weekDoneTasks">0</strong>
+            </article>
+          </section>
+
+          <form class="review-form" id="reviewForm">
+            <input id="reviewMonth" type="month" required />
+            <textarea id="reviewText" placeholder="Что было в этом месяце? Что получилось, что забрало силы, какой фокус дальше?"></textarea>
+            <button class="primary-button" type="submit">Сохранить итог</button>
+          </form>
+
+          <section class="compact-list" id="reviewList"></section>
+
+          <details class="backup-tools">
+            <summary>Резервная копия</summary>
+            <div class="backup-actions">
+              <button class="ghost-button" id="exportButton" type="button">Экспорт</button>
+              <label class="ghost-button file-button" for="importInput">Импорт</label>
+              <input id="importInput" type="file" accept="application/json" />
+            </div>
+          </details>
+        </section>
+      </main>
+
+      <nav class="bottom-nav" id="navTabs" aria-label="Основная навигация">
+        <button class="nav-tab active" data-tab="day" type="button" aria-label="День">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7 4h10" />
+            <path d="M6 8h12v12H6z" />
+            <path d="M9 12h6" />
+            <path d="M9 16h4" />
+          </svg>
+          <span>День</span>
+        </button>
+        <button class="nav-tab" data-tab="plan" type="button" aria-label="План">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7 3v4" />
+            <path d="M17 3v4" />
+            <path d="M4 7h16" />
+            <path d="M5 5h14v16H5z" />
+          </svg>
+          <span>План</span>
+        </button>
+        <button class="nav-tab nav-home" data-tab="money" type="button" aria-label="Деньги">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 7h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7z" />
+            <path d="M16 13h3" />
+            <path d="M6 10h6" />
+          </svg>
+          <span>Деньги</span>
+        </button>
+        <button class="nav-tab" data-tab="projects" type="button" aria-label="Проекты">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v1H3z" />
+            <path d="M3 10h18l-1.4 8.4A2 2 0 0 1 17.6 20H6.4a2 2 0 0 1-2-1.6z" />
+          </svg>
+          <span>Проекты</span>
+        </button>
+        <button class="nav-tab" data-tab="reviews" type="button" aria-label="Итоги">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 19V5" />
+            <path d="M9 19v-7" />
+            <path d="M13 19V8" />
+            <path d="M17 19v-4" />
+          </svg>
+          <span>Итоги</span>
+        </button>
+      </nav>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="./app.js?v=planner-3"></script>
+  </body>
+</html>
